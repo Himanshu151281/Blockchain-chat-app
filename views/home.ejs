@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chats</title>
+</head>
+<body>
+    <h1>Chats</h1>
+    <% for (let key in chats) { %>
+        <h2>Chat between <%= key %></h2>
+        <ul>
+            <% chats[key].forEach(msg => { %>
+                <li>
+                    <strong>Sender:</strong> <%= msg.sender %> <br>
+                    <strong>Receiver:</strong> <%= msg.receiver %> <br>
+                    <strong>Content:</strong> <%= msg.content %> <br>
+                    <strong>Timestamp:</strong> <%= msg.timestamp %> <br>
+                    <strong>Hash:</strong> <%= msg.hash %> <br>
+                    <strong>Previous Hash:</strong> <%= msg.previousHash %>
+                </li>
+            <% }) %>
+        </ul>
+    <% } %>
+</body>
+</html>
