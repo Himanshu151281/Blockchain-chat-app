@@ -33,6 +33,8 @@ app.set("view engine","ejs");
 const path = require("path");
 app.set("views",path.join(__dirname,"/views"));
 
+app.use(express.static(path.join(__dirname,"public/js"))); // if public folder have js folder in which script file is there   //it will work from any folder
+app.use(express.static(path.join(__dirname,"public/css"))); // if public folder have css folder in which css file is there   //it will work from any folder
 
 // ////////////////////////////////////////
 
@@ -117,11 +119,16 @@ app.get('/chats', async (req, res) => {
         });
 
         // Render the home.ejs template with the chats data
-        console.log(chats);
+        // console.log(chats);
         res.render('home.ejs', { chats });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Failed to retrieve chats' });
     }
 });
+
+app.get('/view',(req,res)=>{
+    console.log("view route");
+    res.render("view.ejs");
+})
 
