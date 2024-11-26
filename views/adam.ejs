@@ -3,14 +3,50 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dummy chat</title>
+    <title>Adam chat</title>
     <link rel="stylesheet" href="/style.css" />
   </head>
 
   <body>
-    <h1>Dummy chat</h1>
+    <h1>Adam chat</h1>
     <div class="chats">
-      <p class="sender">
+      <!-- <p class="sender">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt
+        cupiditate, dicta perspiciatis esse nulla maiores earum exercitationem.
+        Quidem, necessitatibus recusandae. Voluptas repellat aliquam fugiat
+        repellendus ad! Facilis quos quasi ab.
+      </p> -->
+      <% for (let key in chats) { %>
+      <ul>
+        <% chats[key].forEach(msg => { %>
+
+        <!-- <strong>Sender:</strong> <%= msg.sender %> <br /> -->
+        <!-- <strong>Receiver:</strong> <%= msg.receiver %> <br /> -->
+
+        <% if (msg.sender == 'Adam') { %>
+        <p class="sender">
+          <strong>Content:</strong> <%= msg.content %> <br />
+        </p>
+        <% } else { %>
+        <p class="receiver">
+          <strong>Content:</strong> <%= msg.content %> <br />
+        </p>
+        <% } %>
+
+        <!-- <strong>Timestamp:</strong> <%= msg.timestamp %> <br /> -->
+        <!-- <strong>Hash:</strong> <%= msg.hash %> <br /> -->
+        <!-- <strong>Previous Hash:</strong> <%= msg.previousHash %> -->
+        <!-- <strong>Sender:</strong> <%= msg.sender %> <br /> -->
+        <!-- <strong>Receiver:</strong> <%= msg.receiver %> <br /> -->
+
+        <!-- <strong>Timestamp:</strong> <%= msg.timestamp %> <br /> -->
+        <!-- <strong>Hash:</strong> <%= msg.hash %> <br /> -->
+        <!-- <strong>Previous Hash:</strong> <%= msg.previousHash %> -->
+        <% }) %>
+      </ul>
+      <% } %>
+      <!-- </p> -->
+      <!-- <p class="sender">
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt
         cupiditate, dicta perspiciatis esse nulla maiores earum exercitationem.
         Quidem, necessitatibus recusandae. Voluptas repellat aliquam fugiat
@@ -33,23 +69,13 @@
         aliquam accusamus eligendi perspiciatis praesentium voluptas sit
         asperiores, a hic architecto laboriosam numquam laudantium ipsum
         voluptatum ducimus ipsa doloribus labore.
-      </p>
-      <p class="sender">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt
-        cupiditate, dicta perspiciatis esse nulla maiores earum exercitationem.
-        Quidem, necessitatibus recusandae. Voluptas repellat aliquam fugiat
-        repellendus ad! Facilis quos quasi ab.
-      </p>
-      <p class="reciever">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Id dolorem
-        aliquam accusamus eligendi perspiciatis praesentium voluptas sit
-        asperiores, a hic architecto laboriosam numquam laudantium ipsum
-        voluptatum ducimus ipsa doloribus labore.
-      </p>
+      </p> -->
     </div>
     <div class="btcontainer">
-      <input type="text" />
-      <button>send</button>
+      <form action="/adam" method="post">
+        <input type="text" name="content" />
+        <button>send</button>
+      </form>
     </div>
     <script src="/app.js"></script>
   </body>

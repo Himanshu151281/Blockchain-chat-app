@@ -7,34 +7,41 @@ let chats=document.querySelector(".chats");
 
 let button=document.querySelector("button");
 
-button.addEventListener("click",()=>{
-    let p=document.createElement("p");
-    p.innerHTML=input.value;
-    p.classList.add("sender");
+// button.addEventListener("click",()=>{
+//     let p=document.createElement("p");
+//     p.innerHTML=input.value;
+//     p.classList.add("sender");
     
     
-   chats.appendChild(p);
-    // input.value="";
-    scrollToBottom();
-    if(input.value!=""){
-        autoMessage();
-        input.value="";
-    }
-    function autoMessage(){
-        setTimeout(()=>{
+//    chats.appendChild(p);
+//     // input.value="";
+//     scrollToBottom();
+    // if(input.value!=""){
+    //     autoMessage();
+    //     input.value="";
+    // }
+//     function autoMessage(){
+//         setTimeout(()=>{
     
-            let p=document.createElement("p");
-            p.innerHTML="thanks for message";
-            p.classList.add("reciever");
-            chats.appendChild(p);
-            scrollToBottom();
-        },1000);
-    }
-})
-
+//             let p=document.createElement("p");
+//             p.innerHTML="thanks for message";
+//             p.classList.add("reciever");
+//             chats.appendChild(p);
+//             scrollToBottom();
+//         },1000);
+//     }
+// })
 
 function scrollToBottom() {
     // const chatsContainer = document.getElementById('chats');
     chats.scrollTop = chats.scrollHeight;
 }
 
+// let form = document.querySelector('form');
+// form.addEventListener('submit',(event)=>{
+//     // event.preventDefault();
+//     // if(input.value!=""){
+//     //     // autoMessage();
+//     //     input.value="";
+//     // }
+// });

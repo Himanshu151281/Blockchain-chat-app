@@ -36,6 +36,13 @@ app.set("views",path.join(__dirname,"/views"));
 app.use(express.static(path.join(__dirname,"public/js"))); // if public folder have js folder in which script file is there   //it will work from any folder
 app.use(express.static(path.join(__dirname,"public/css"))); // if public folder have css folder in which css file is there   //it will work from any folder
 
+// Middleware to parse URL-encoded data
+app.use(express.urlencoded({ extended: true }));
+
+// Middleware to parse JSON data
+app.use(express.json());
+
+
 // ////////////////////////////////////////
 
 let lastHash = '0'; // Genesis block hash
@@ -127,8 +134,92 @@ app.get('/chats', async (req, res) => {
     }
 });
 
-app.get('/view',(req,res)=>{
-    console.log("view route");
-    res.render("view.ejs");
-})
+// app.get('/view',(req,res)=>{
+//     console.log("view route");
+//     res.render("view.ejs");
+// })
 
+app.get('/adam',async (req,res)=>{
+    try {
+        // Retrieve all messages from the database
+        const messages = await Message.find().sort({ timestamp: 1 });
+
+        // Group messages by sender and receiver
+        const chats = {};
+        messages.forEach((msg) => {
+            const key = [msg.sender, msg.receiver].sort().join('-'); // Unique chat key for two users
+            if (!chats[key]) {
+                chats[key] = [];
+            }
+            chats[key].push({
+                sender: msg.sender,
+                receiver: msg.receiver,
+                content: msg.content,
+                timestamp: msg.timestamp,
+                hash: msg.hash,
+                previousHash: msg.previousHash,
+            });
+        });
+
+        // Render the home.ejs template with the chats data
+        // console.log(chats);
+        res.render('adam.ejs', { chats });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to retrieve chats' });
+    }
+    // res.render("adam.ejs");
+});
+
+app.post('/adam', async(req,res)=>{
+    console.log("adam route");
+    const { content } = req.body;
+    console.log(content);
+    if(content){
+        const message = new Message({
+            sender:"Adam",
+            receiver:"Bob",
+            content,
+            previousHash: lastHash,
+        });    
+        // Generate hash and update lastHash
+        message.hash = message.generateHash();
+        lastHash = message.hash;
+    
+        await message.save();
+        // res.status(200).json({ message: 'Message sent!', data: message });
+        res.redirect('adam');
+    } else {
+        res.redirect('adam');
+    }
+});
+
+
+
+// const { sender, receiver, content } = req.body;
+
+    // const message = new Message({
+    //     sender,
+    //     receiver,
+    //     content,
+    //     previousHash: lastHash,
+    // });
+
+//     // Generate hash and update lastHash
+//     message.hash = message.generateHash();
+//     lastHash = message.hash;
+
+//     await message.save();
+//     res.status(200).json({ message: 'Message sent!', data: message });
+
+
+
+app.get('/bob',(req,res)=>{
+    console.log("bob route");
+    res.render("bob.ejs");
+});
+
+app.post('/bob',(req,res)=>{
+    console.log("bob route");
+    res.render("bob.ejs");
+});
