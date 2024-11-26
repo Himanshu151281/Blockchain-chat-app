@@ -14,9 +14,12 @@ button.addEventListener("click",()=>{
     
     
    chats.appendChild(p);
-    input.value="";
+    // input.value="";
     scrollToBottom();
-    autoMessage();
+    if(input.value!=""){
+        autoMessage();
+        input.value="";
+    }
     function autoMessage(){
         setTimeout(()=>{
     
