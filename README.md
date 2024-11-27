@@ -45,6 +45,29 @@ This project is a simple chat application that uses a blockchain structure to st
 
 5. Open your browser and navigate to `http://localhost:3000`.
 
+## Example
+
+- ### Adam homepage `/adam` 👇
+![image](https://github.com/Himanshu151281/Project_Attachments/blob/690d69c7804106c6c41a2b0a35b81a4ca28f0087/Adam_chat_1.png)
+
+- ### Bob homepage `/bob` 👇
+![image](https://github.com/Himanshu151281/Project_Attachments/blob/690d69c7804106c6c41a2b0a35b81a4ca28f0087/Bob_chat_1.png)
+
+- ### Both homepages are shown together 👇
+![image](https://github.com/Himanshu151281/Project_Attachments/blob/690d69c7804106c6c41a2b0a35b81a4ca28f0087/AB_02.png)
+
+- ### Adam's message to send 👇
+![image](https://github.com/Himanshu151281/Project_Attachments/blob/690d69c7804106c6c41a2b0a35b81a4ca28f0087/AB_03.png)
+
+- ### A message was sent from Adam and received by Bob 👇
+![image](https://github.com/Himanshu151281/Project_Attachments/blob/690d69c7804106c6c41a2b0a35b81a4ca28f0087/AB_04.png)
+
+- ### Bob's message to send 👇
+![image](https://github.com/Himanshu151281/Project_Attachments/blob/690d69c7804106c6c41a2b0a35b81a4ca28f0087/AB_05.png)
+
+- ### A message was sent from Bob and received by Adam 👇
+![image](https://github.com/Himanshu151281/Project_Attachments/blob/690d69c7804106c6c41a2b0a35b81a4ca28f0087/AB_06.png)
+
 ## Routes
 
 ### POST `/send`
