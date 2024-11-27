@@ -214,12 +214,57 @@ app.post('/adam', async(req,res)=>{
 
 
 
-app.get('/bob',(req,res)=>{
-    console.log("bob route");
-    res.render("bob.ejs");
+app.get('/bob', async(req,res)=>{
+    try {
+        // Retrieve all messages from the database
+        const messages = await Message.find().sort({ timestamp: 1 });
+
+        // Group messages by sender and receiver
+        const chats = {};
+        messages.forEach((msg) => {
+            const key = [msg.sender, msg.receiver].sort().join('-'); // Unique chat key for two users
+            if (!chats[key]) {
+                chats[key] = [];
+            }
+            chats[key].push({
+                sender: msg.sender,
+                receiver: msg.receiver,
+                content: msg.content,
+                timestamp: msg.timestamp,
+                hash: msg.hash,
+                previousHash: msg.previousHash,
+            });
+        });
+
+        // Render the home.ejs template with the chats data
+        // console.log(chats);
+        res.render('bob.ejs', { chats });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to retrieve chats' });
+    }
+    // res.render("bob.ejs");
 });
 
-app.post('/bob',(req,res)=>{
+app.post('/bob', async(req,res)=>{
     console.log("bob route");
-    res.render("bob.ejs");
+    const { content } = req.body;
+    console.log(content);
+    if(content){
+        const message = new Message({
+            sender:"Bob",
+            receiver:"Adam",
+            content,
+            previousHash: lastHash,
+        });    
+        // Generate hash and update lastHash
+        message.hash = message.generateHash();
+        lastHash = message.hash;
+    
+        await message.save();
+        // res.status(200).json({ message: 'Message sent!', data: message });
+        res.redirect('bob');
+    } else {
+        res.redirect('bob');
+    }
 });
