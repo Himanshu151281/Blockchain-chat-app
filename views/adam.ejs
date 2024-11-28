@@ -9,67 +9,8 @@
 
   <body>
     <h1>Adam chat</h1>
-    <div class="chats">
-      <!-- <p class="sender">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt
-        cupiditate, dicta perspiciatis esse nulla maiores earum exercitationem.
-        Quidem, necessitatibus recusandae. Voluptas repellat aliquam fugiat
-        repellendus ad! Facilis quos quasi ab.
-      </p> -->
-      <% for (let key in chats) { %>
-      <ul>
-        <% chats[key].forEach(msg => { %>
-
-        <!-- <strong>Sender:</strong> <%= msg.sender %> <br /> -->
-        <!-- <strong>Receiver:</strong> <%= msg.receiver %> <br /> -->
-
-        <% if (msg.sender == 'Adam') { %>
-        <p class="sender">
-          <strong>Content:</strong> <%= msg.content %> <br />
-        </p>
-        <% } else { %>
-        <p class="receiver">
-          <strong>Content:</strong> <%= msg.content %> <br />
-        </p>
-        <% } %>
-
-        <!-- <strong>Timestamp:</strong> <%= msg.timestamp %> <br /> -->
-        <!-- <strong>Hash:</strong> <%= msg.hash %> <br /> -->
-        <!-- <strong>Previous Hash:</strong> <%= msg.previousHash %> -->
-        <!-- <strong>Sender:</strong> <%= msg.sender %> <br /> -->
-        <!-- <strong>Receiver:</strong> <%= msg.receiver %> <br /> -->
-
-        <!-- <strong>Timestamp:</strong> <%= msg.timestamp %> <br /> -->
-        <!-- <strong>Hash:</strong> <%= msg.hash %> <br /> -->
-        <!-- <strong>Previous Hash:</strong> <%= msg.previousHash %> -->
-        <% }) %>
-      </ul>
-      <% } %>
-      <!-- </p> -->
-      <!-- <p class="sender">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt
-        cupiditate, dicta perspiciatis esse nulla maiores earum exercitationem.
-        Quidem, necessitatibus recusandae. Voluptas repellat aliquam fugiat
-        repellendus ad! Facilis quos quasi ab.
-      </p>
-      <p class="reciever">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Id dolorem
-        aliquam accusamus eligendi perspiciatis praesentium voluptas sit
-        asperiores, a hic architecto laboriosam numquam laudantium ipsum
-        voluptatum ducimus ipsa doloribus labore.
-      </p>
-      <p class="sender">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt
-        cupiditate, dicta perspiciatis esse nulla maiores earum exercitationem.
-        Quidem, necessitatibus recusandae. Voluptas repellat aliquam fugiat
-        repellendus ad! Facilis quos quasi ab.
-      </p>
-      <p class="reciever">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Id dolorem
-        aliquam accusamus eligendi perspiciatis praesentium voluptas sit
-        asperiores, a hic architecto laboriosam numquam laudantium ipsum
-        voluptatum ducimus ipsa doloribus labore.
-      </p> -->
+    <div class="chats" id="chats">
+      <!-- Existing chat messages will be rendered here -->
     </div>
     <div class="btcontainer">
       <form action="/adam" method="post">
@@ -77,6 +18,35 @@
         <button>send</button>
       </form>
     </div>
-    <script src="/app.js"></script>
+    <!-- <script src="/app.js"></script> -->
+    <script>
+      async function fetchChats() {
+        try {
+          const response = await fetch("/reload");
+          const chats = await response.json();
+          const chatsDiv = document.getElementById("chats");
+          chatsDiv.innerHTML = ""; // Clear the existing content
+
+          for (let key in chats) {
+            const ul = document.createElement("ul");
+            chats[key].forEach((msg) => {
+              const p = document.createElement("p");
+              p.className = msg.sender === "Adam" ? "sender" : "receiver";
+              p.innerHTML = `<strong>Content:</strong> ${msg.content} <br />`;
+              ul.appendChild(p);
+            });
+            chatsDiv.appendChild(ul);
+          }
+        } catch (error) {
+          console.error("Error fetching chats:", error);
+        }
+      }
+
+      // Fetch chats every 2 seconds
+      setInterval(fetchChats, 2000);
+
+      // Initial fetch
+      fetchChats();
+    </script>
   </body>
 </html>

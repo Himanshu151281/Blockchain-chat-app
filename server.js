@@ -268,3 +268,24 @@ app.post('/bob', async(req,res)=>{
         res.redirect('bob');
     }
 });
+
+
+// New Feature - Reload only messages section
+// v - 0.1.0
+app.get('/reload', async (req, res) => {
+    try {
+        const messages = await Message.find().sort({ timestamp: 1 });
+        const chats = {};
+        messages.forEach((msg) => {
+            const key = [msg.sender, msg.receiver].sort().join('-');
+            if (!chats[key]) {
+                chats[key] = [];
+            }
+            chats[key].push(msg);
+        });
+        res.json(chats);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to retrieve chats' });
+    }
+});
