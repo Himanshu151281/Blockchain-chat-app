@@ -4,19 +4,38 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bob chat</title>
-    <link rel="stylesheet" href="/style.css" />
+    <!-- <link rel="stylesheet" href="/style.css" /> -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script
+      src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js"
+      defer
+      init
+    ></script>
   </head>
-
   <body>
-    <h1>Bob chat</h1>
-    <div class="chats" id="chats">
-      <!-- Existing chat messages will be rendered here -->
-    </div>
-    <div class="btcontainer">
-      <form action="/bob" method="post">
-        <input type="text" name="content" />
-        <button>send</button>
-      </form>
+    <div class="flex flex-col h-full bg-purple-100">
+      <header class="bg-purple-600 text-white p-4">
+        <h1 class="text-2xl font-bold">Blockchain Chat App</h1>
+      </header>
+      <div class="flex-grow p-4">
+        <div class="space-y-4 chats" id="chats"></div>
+      </div>
+      <div class="p-4 bg-purple-200">
+        <form class="flex space-x-2" action="/bob" method="post">
+          <input
+            type="text"
+            placeholder="Type a message..."
+            value=""
+            name="content"
+            class="flex-grow rounded-3xl"
+          />
+          <button
+            class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-3xl"
+          >
+            Send
+          </button>
+        </form>
+      </div>
     </div>
     <!-- <script src="/app.js"></script> -->
     <script>
@@ -28,17 +47,31 @@
           chatsDiv.innerHTML = ""; // Clear the existing content
 
           for (let key in chats) {
-            const ul = document.createElement("ul");
             chats[key].forEach((msg) => {
-              const p = document.createElement("p");
-              p.className = msg.sender === "Bob" ? "sender" : "receiver";
-              p.innerHTML = `<strong>Content:</strong> ${msg.content} <br />`;
-              ul.appendChild(p);
+              const div = document.createElement("div");
+              div.className =
+                msg.sender === "Bob"
+                  ? "sender flex justify-end"
+                  : "receiver flex justify-start";
+              div.innerHTML =
+                msg.sender === "Bob"
+                  ? `<div class="max-w-xs px-4 py-2 bg-purple-500 text-white" style="border-radius: 14px 14px 14px 0;"> ${msg.content} </div>`
+                  : `<div class="max-w-xs px-4 py-2 bg-white text-purple-900" style="border-radius: 14px 14px 0 14px;"> ${msg.content} </div>`;
+              chatsDiv.appendChild(div);
             });
-            chatsDiv.appendChild(ul);
           }
+          // Scroll to bottom after appending new messages
+          scrollToBottom();
         } catch (error) {
           console.error("Error fetching chats:", error);
+        }
+      }
+
+      function scrollToBottom() {
+        const chatsDiv = document.getElementById("chats");
+        const lastMessage = chatsDiv.lastElementChild;
+        if (lastMessage) {
+          lastMessage.scrollIntoView({ behavior: "smooth" });
         }
       }
 
