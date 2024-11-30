@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV!="production"){
+    require("dotenv").config();
+}
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -5,21 +9,24 @@ const app = express();
 
 app.use(bodyParser.json());
 
-// MongoDB connection
-mongoose.connect('mongodb://127.0.0.1:27017/blockchainChat', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
-
-const db = mongoose.connection;
-db.once('open', () => {
-    console.log('Connected to MongoDB');
-});
+// // MongoDB connection
+// 'mongodb://127.0.0.1:27017/blockchainChat'
+const dburl = process.env.ATLASDB_URL;
+main()
+.then(()=>{
+    console.log("Connected to MongoDB ATLAS");
+})
+.catch((err)=>{
+    console.log(err);
+})
 
 app.listen(3000, () => {
     console.log('Server running on http://localhost:3000');
 });
 
+async function main(){
+    await mongoose.connect(dburl);
+}
 
 const Message = require('./models/Message');
 
