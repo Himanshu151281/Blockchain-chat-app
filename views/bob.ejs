@@ -21,15 +21,17 @@
         <div class="space-y-4 chats" id="chats"></div>
       </div>
       <div class="p-4 bg-purple-200">
-        <form class="flex space-x-2" action="/bob" method="post">
+        <form class="flex space-x-2" id="chatForm">
           <input
             type="text"
             placeholder="Type a message..."
             value=""
             name="content"
             class="flex-grow rounded-3xl"
+            id="content"
           />
           <button
+            type="submit"
             class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-3xl"
           >
             Send
@@ -60,6 +62,7 @@
               chatsDiv.appendChild(div);
             });
           }
+
           // Scroll to bottom after appending new messages
           scrollToBottom();
         } catch (error) {
@@ -74,6 +77,30 @@
           lastMessage.scrollIntoView({ behavior: "smooth" });
         }
       }
+
+      document.getElementById("chatForm").addEventListener("submit", async function (event) {
+        event.preventDefault(); // Prevent the default form submission
+        const content = document.getElementById("content").value;
+
+        try {
+          const response = await fetch("/bob", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ content }),
+          });
+
+          if (response.ok) {
+            document.getElementById("content").value = ""; // Clear the input field
+            fetchChats(); // Refresh the chats
+          } else {
+            console.error("Error sending message:", response.statusText);
+          }
+        } catch (error) {
+          console.error("Error sending message:", error);
+        }
+      });
 
       // Fetch chats every 2 seconds
       setInterval(fetchChats, 2000);
