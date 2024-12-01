@@ -296,3 +296,7 @@ app.get('/reload', async (req, res) => {
         res.status(500).json({ error: 'Failed to retrieve chats' });
     }
 });
+
+app.get('/',(req,res)=>{
+    res.render("index.ejs");
+})
