@@ -51,16 +51,18 @@
 
         for (let key in chats) {
           chats[key].forEach((msg) => {
-            const div = document.createElement("div");
-            div.className =
-              msg.sender === "Bob"
-                ? "sender flex justify-end"
-                : "receiver flex justify-start";
-            div.innerHTML =
-              msg.sender === "Bob"
-                ? `<div class="max-w-xs px-4 shadow-sm py-2 bg-purple-500 text-white" style="border-radius: 14px 14px 14px 0;"> ${msg.content} </div>`
-                : `<div class="max-w-xs px-4 shadow-lg py-2 bg-white text-purple-900" style="border-radius: 14px 14px 0 14px;"> ${msg.content} </div>`;
-            chatsDiv.appendChild(div);
+            if (msg.sender === "Bob" || msg.sender === "Adam") {
+              const div = document.createElement("div");
+              div.className =
+                msg.sender === "Bob"
+                  ? "sender flex justify-end"
+                  : "receiver flex justify-start";
+              div.innerHTML =
+                msg.sender === "Bob"
+                  ? `<div class="max-w-xs px-4 shadow-lg py-2 bg-purple-500 text-white" style="border-radius: 14px 14px 14px 0;"> ${msg.content} </div>`
+                  : `<div class="max-w-xs px-4 shadow-sm py-2 bg-white text-purple-900" style="border-radius: 14px 14px 0 14px;"> ${msg.content} </div>`;
+              chatsDiv.appendChild(div);
+            }
           });
         }
 

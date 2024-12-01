@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 
 // // MongoDB connection
 // 'mongodb://127.0.0.1:27017/blockchainChat'
-const dburl = process.env.ATLASDB_URL;
+const dburl = "mongodb://127.0.0.1:27017/blockchainChat";
 main()
 .then(()=>{
     console.log("Connected to MongoDB ATLAS");
@@ -54,6 +54,17 @@ app.use(express.json());
 
 let lastHash = '0'; // Genesis block hash
 
+async function initializeLastHash() {
+    // const oldestMessage = await Message.find().sort({ createdAt: 1 }).limit(1);
+    const oldestMessage = await Message.find().sort({ createdAt: 1 });
+    console.log(oldestMessage);
+    if (oldestMessage.length > 0) {
+        lastHash = oldestMessage[oldestMessage.length-1].hash;
+    }
+}
+
+initializeLastHash();
+
 // Send a message
 // POST http://localhost:3000/send
 // {
@@ -64,19 +75,35 @@ let lastHash = '0'; // Genesis block hash
 app.post('/send', async (req, res) => {
     const { sender, receiver, content } = req.body;
 
-    const message = new Message({
-        sender,
-        receiver,
-        content,
-        previousHash: lastHash,
-    });
+    try {
+        // Check if there are any existing messages between sender and receiver
+        const existingMessages = await Message.find({ sender, receiver }).sort({ createdAt: 1 });
+        console.log(existingMessages);
+        let isHashExists = null;
+        if (existingMessages.length > 0) {
+            isHashExists = existingMessages[existingMessages.length-1].hash;
+        } else{
+            isHashExists = '0';
+        }
+        // isHashExists = existingMessages ? existingMessages.hash : '0';
 
-    // Generate hash and update lastHash
-    message.hash = message.generateHash();
-    lastHash = message.hash;
+        const message = new Message({
+            sender,
+            receiver,
+            content,
+            previousHash: isHashExists,
+        });
 
-    await message.save();
-    res.status(200).json({ message: 'Message sent!', data: message });
+        // Generate hash for the new message
+        message.hash = message.generateHash();
+        // lastHash = message.hash;
+
+        await message.save();
+        res.status(200).json({ message: 'Message sent!', data: message });
+    } catch (error) {
+        console.error('Error sending message:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
 });
 
 // Retrieve messages
