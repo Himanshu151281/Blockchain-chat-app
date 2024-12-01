@@ -41,45 +41,47 @@
     </div>
     <!-- <script src="/app.js"></script> -->
   </body>
-    <script>
-      async function fetchChats() {
-        try {
-          const response = await fetch("/reload");
-          const chats = await response.json();
-          const chatsDiv = document.getElementById("chats");
-          chatsDiv.innerHTML = ""; // Clear the existing content
-
-          for (let key in chats) {
-            chats[key].forEach((msg) => {
-              const div = document.createElement("div");
-              div.className =
-                msg.sender === "Adam"
-                  ? "sender flex justify-end"
-                  : "receiver flex justify-start";
-              div.innerHTML =
-                msg.sender === "Adam"
-                  ? `<div class="max-w-xs px-4 py-2 shadow-lg bg-purple-500 text-white" style="border-radius: 14px 14px 14px 0;"> ${msg.content} </div>`
-                  : `<div class="max-w-xs px-4 py-2 shadow-lg bg-white text-purple-900" style="border-radius: 14px 14px 0 14px;"> ${msg.content} </div>`;
-              chatsDiv.appendChild(div);
-            });
-          }
-
-          // Scroll to bottom after appending new messages
-          scrollToBottom();
-        } catch (error) {
-          console.error("Error fetching chats:", error);
-        }
-      }
-
-      function scrollToBottom() {
+  <script>
+    async function fetchChats() {
+      try {
+        const response = await fetch("/reload");
+        const chats = await response.json();
         const chatsDiv = document.getElementById("chats");
-        const lastMessage = chatsDiv.lastElementChild;
-        if (lastMessage) {
-          lastMessage.scrollIntoView({ behavior: "smooth" });
-        }
-      }
+        chatsDiv.innerHTML = ""; // Clear the existing content
 
-      document.getElementById("chatForm").addEventListener("submit", async function (event) {
+        for (let key in chats) {
+          chats[key].forEach((msg) => {
+            const div = document.createElement("div");
+            div.className =
+              msg.sender === "Adam"
+                ? "sender flex justify-end"
+                : "receiver flex justify-start";
+            div.innerHTML =
+              msg.sender === "Adam"
+                ? `<div class="max-w-xs px-4 py-2 shadow-lg bg-purple-500 text-white" style="border-radius: 14px 14px 14px 0;"> ${msg.content} </div>`
+                : `<div class="max-w-xs px-4 py-2 shadow-sm bg-white text-purple-900" style="border-radius: 14px 14px 0 14px;"> ${msg.content} </div>`;
+            chatsDiv.appendChild(div);
+          });
+        }
+
+        // Scroll to bottom after appending new messages
+        scrollToBottom();
+      } catch (error) {
+        console.error("Error fetching chats:", error);
+      }
+    }
+
+    function scrollToBottom() {
+      const chatsDiv = document.getElementById("chats");
+      const lastMessage = chatsDiv.lastElementChild;
+      if (lastMessage) {
+        lastMessage.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+
+    document
+      .getElementById("chatForm")
+      .addEventListener("submit", async function (event) {
         event.preventDefault(); // Prevent the default form submission
         const content = document.getElementById("content").value;
 
@@ -103,10 +105,10 @@
         }
       });
 
-      // Fetch chats every 2 seconds
-      setInterval(fetchChats, 2000);
+    // Fetch chats every 2 seconds
+    setInterval(fetchChats, 2000);
 
-      // Initial fetch
-      fetchChats();
-    </script>
+    // Initial fetch
+    fetchChats();
+  </script>
 </html>
