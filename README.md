@@ -48,25 +48,25 @@ This project is a simple chat application that uses a blockchain structure to st
 ## Example
 
 - ### Adam homepage `/adam` 👇
-![image](https://github.com/Himanshu151281/Project_Attachments/blob/690d69c7804106c6c41a2b0a35b81a4ca28f0087/Adam_chat_1.png)
+![image](https://github.com/Himanshu151281/Project_Attachments/blob/873412379c4dcd7208b8f09cb598027bd6e62d12/0A.jpg)
 
 - ### Bob homepage `/bob` 👇
-![image](https://github.com/Himanshu151281/Project_Attachments/blob/690d69c7804106c6c41a2b0a35b81a4ca28f0087/Bob_chat_1.png)
+![image](https://github.com/Himanshu151281/Project_Attachments/blob/873412379c4dcd7208b8f09cb598027bd6e62d12/0B.jpg)
 
 - ### Both homepages are shown together 👇
-![image](https://github.com/Himanshu151281/Project_Attachments/blob/690d69c7804106c6c41a2b0a35b81a4ca28f0087/AB_02.png)
+![image](https://github.com/Himanshu151281/Project_Attachments/blob/873412379c4dcd7208b8f09cb598027bd6e62d12/2_AB.jpg)
 
 - ### Adam's message to send 👇
-![image](https://github.com/Himanshu151281/Project_Attachments/blob/690d69c7804106c6c41a2b0a35b81a4ca28f0087/AB_03.png)
+![image](https://github.com/Himanshu151281/Project_Attachments/blob/873412379c4dcd7208b8f09cb598027bd6e62d12/3_F.jpg)
 
 - ### A message was sent from Adam and received by Bob 👇
-![image](https://github.com/Himanshu151281/Project_Attachments/blob/690d69c7804106c6c41a2b0a35b81a4ca28f0087/AB_04.png)
+![image](https://github.com/Himanshu151281/Project_Attachments/blob/873412379c4dcd7208b8f09cb598027bd6e62d12/4_SR.jpg)
 
 - ### Bob's message to send 👇
-![image](https://github.com/Himanshu151281/Project_Attachments/blob/690d69c7804106c6c41a2b0a35b81a4ca28f0087/AB_05.png)
+![image](https://github.com/Himanshu151281/Project_Attachments/blob/873412379c4dcd7208b8f09cb598027bd6e62d12/5_S.jpg)
 
 - ### A message was sent from Bob and received by Adam 👇
-![image](https://github.com/Himanshu151281/Project_Attachments/blob/690d69c7804106c6c41a2b0a35b81a4ca28f0087/AB_06.png)
+![image](https://github.com/Himanshu151281/Project_Attachments/blob/873412379c4dcd7208b8f09cb598027bd6e62d12/6_SR.jpg)
 
 ## Routes
 
