@@ -6,6 +6,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const app = express();
+const crypto = require('crypto');
 
 app.use(bodyParser.json());
 
@@ -143,8 +144,19 @@ app.get('/validate', async (req, res) => {
         const pairMessages = userPairs[pairKey];
         let pairValid = true;
 
-        for (let i = 1; i < pairMessages.length; i++) {
-            if (pairMessages[i].previousHash !== pairMessages[i - 1].hash) {
+        for (let i = 0; i < pairMessages.length; i++) {
+            const msg = pairMessages[i];
+            const recalculatedHash = crypto.createHash('sha256').update(
+                msg.sender + msg.receiver + msg.content + msg.previousHash + msg.timestamp
+            ).digest('hex');
+
+            if (msg.hash !== recalculatedHash) {
+                pairValid = false;
+                overallValid = false;
+                break;
+            }
+
+            if (i > 0 && msg.previousHash !== pairMessages[i - 1].hash) {
                 pairValid = false;
                 overallValid = false;
                 break;
