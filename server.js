@@ -119,18 +119,43 @@ app.get('/messages', async (req, res) => {
 
 app.get('/validate', async (req, res) => {
     const messages = await Message.find().sort({ timestamp: 1 });
-    let valid = true;
+    const userPairs = {};
 
-    for (let i = 1; i < messages.length; i++) {
-        if (messages[i].previousHash !== messages[i - 1].hash) {
-            valid = false;
-            break;
+    // Group messages by sender-receiver pairs and receiver-sender pairs
+    messages.forEach((msg) => {
+        const pairKey1 = `${msg.sender}-${msg.receiver}`;
+        const pairKey2 = `${msg.receiver}-${msg.sender}`;
+        if (!userPairs[pairKey1]) {
+            userPairs[pairKey1] = [];
         }
+        if (!userPairs[pairKey2]) {
+            userPairs[pairKey2] = [];
+        }
+        userPairs[pairKey1].push(msg);
+        userPairs[pairKey2].push(msg);
+    });
+
+    let overallValid = true;
+    const validationResults = {};
+
+    // Validate each user pair's chat history
+    for (const pairKey in userPairs) {
+        const pairMessages = userPairs[pairKey];
+        let pairValid = true;
+
+        for (let i = 1; i < pairMessages.length; i++) {
+            if (pairMessages[i].previousHash !== pairMessages[i - 1].hash) {
+                pairValid = false;
+                overallValid = false;
+                break;
+            }
+        }
+
+        validationResults[pairKey] = pairValid;
     }
 
-    res.status(200).json({ valid });
+    res.status(200).json({ valid: overallValid, validationResults });
 });
-
 
 
 
