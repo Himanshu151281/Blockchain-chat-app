@@ -68,6 +68,18 @@ This project is a simple chat application that uses a blockchain structure to st
 - ### A message was sent from Bob and received by Adam 👇
 ![image](https://github.com/Himanshu151281/Project_Attachments/blob/873412379c4dcd7208b8f09cb598027bd6e62d12/6_SR.jpg)
 
+- ### How the Blockchain Structure Looks like 👇 `/chats`
+![image](https://github.com/Himanshu151281/Project_Attachments/blob/a06feb75cbea452f5c3340565be6144ddbd03658/Screenshot%202024-12-01%20210958.png)
+
+- ### Validate route to check if our chats are secured or not 👇
+![image](https://github.com/Himanshu151281/Project_Attachments/blob/a06feb75cbea452f5c3340565be6144ddbd03658/Screenshot%202024-12-01%20211112.png)
+
+- ### Let's do the further chat 👇
+![image](https://github.com/Himanshu151281/Project_Attachments/blob/0bcb69ced2d214aee98080208600dc0a80380d3f/Screenshot%202024-12-02%20110835.png)
+
+- ### Now the blockchain structure looks like 👇
+![image](https://github.com/Himanshu151281/Project_Attachments/blob/0bcb69ced2d214aee98080208600dc0a80380d3f/Screenshot%202024-12-02%20110319.png)
+
 ## Routes
 
 ### POST `/send`
