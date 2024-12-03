@@ -1,6 +1,6 @@
 # Blockchain Chat Application
 
-This project is a simple chat application that uses a blockchain structure to store messages. Each message is stored as a block in the blockchain, ensuring data integrity and security.
+This project is a simple chat application that uses a blockchain structure to store messages. Each message is stored as a block, ensuring data integrity and security.
 
 ## Features
 
