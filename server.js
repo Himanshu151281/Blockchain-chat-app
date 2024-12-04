@@ -78,7 +78,12 @@ app.post('/send', async (req, res) => {
 
     try {
         // Check if there are any existing messages between sender and receiver
-        const existingMessages = await Message.find({ sender, receiver }).sort({ createdAt: 1 });
+        const existingMessages = await Message.find({
+            $or: [
+                { sender, receiver },
+                { sender: receiver, receiver: sender }
+            ]
+        }).sort({ createdAt: 1 });
         console.log(existingMessages);
         let isHashExists = null;
         if (existingMessages.length > 0) {
